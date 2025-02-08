@@ -17,6 +17,6 @@ public class Supplier {
     private String address;
     private String phone;
     private String email;
-    private List productList;
+    private List<Product> productList;
 
 }

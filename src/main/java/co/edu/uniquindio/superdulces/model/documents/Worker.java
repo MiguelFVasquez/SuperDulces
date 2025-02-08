@@ -1,5 +1,6 @@
 package co.edu.uniquindio.superdulces.model.documents;
 
+import co.edu.uniquindio.superdulces.model.enums.Function;
 import co.edu.uniquindio.superdulces.model.enums.State;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Worker {
     private Float wage;
     private Integer hoursPerWeek;
     private State state;
+    private Function function;
     private Date dateOfBirth;
 
 
