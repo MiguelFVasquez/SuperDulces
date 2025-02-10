@@ -16,6 +16,7 @@ public class Worker {
     private String id;
 
     private String name;
+    private String document;
     private String surname;
     private String email;
     private String phone;

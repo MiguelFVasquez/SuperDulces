@@ -10,4 +10,6 @@ public interface WorkerRepository extends MongoRepository<Worker,String> {
 
     @Query
     Worker findByName(String name);
+    @Query
+    Worker findByDocument(String email);
 }

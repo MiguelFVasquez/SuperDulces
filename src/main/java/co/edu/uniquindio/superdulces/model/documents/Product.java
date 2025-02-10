@@ -1,6 +1,7 @@
 package co.edu.uniquindio.superdulces.model.documents;
 
 import co.edu.uniquindio.superdulces.model.enums.Category;
+import co.edu.uniquindio.superdulces.model.enums.State;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -19,5 +20,6 @@ public class Product {
     private Integer quantity;
     private Float price;
     private Supplier supplier;
+    private State state;
     private Category category;
 }

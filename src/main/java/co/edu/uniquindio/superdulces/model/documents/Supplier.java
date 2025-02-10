@@ -1,5 +1,6 @@
 package co.edu.uniquindio.superdulces.model.documents;
 
+import co.edu.uniquindio.superdulces.model.enums.State;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -17,6 +18,7 @@ public class Supplier {
     private String address;
     private String phone;
     private String email;
+    private State state;
     private List<Product> productList;
 
 }
