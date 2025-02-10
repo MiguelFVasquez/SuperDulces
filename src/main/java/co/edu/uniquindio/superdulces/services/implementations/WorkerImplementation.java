@@ -1,9 +1,12 @@
 package co.edu.uniquindio.superdulces.services.implementations;
 
 import co.edu.uniquindio.superdulces.dto.workerDTO.CreateWorkerDTO;
+import co.edu.uniquindio.superdulces.dto.workerDTO.ItemWorkerDTO;
 import co.edu.uniquindio.superdulces.dto.workerDTO.UpdateWorkerDTO;
 import co.edu.uniquindio.superdulces.exceptions.WorkerException;
 import co.edu.uniquindio.superdulces.model.documents.Worker;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import co.edu.uniquindio.superdulces.model.enums.State;
 import co.edu.uniquindio.superdulces.repositories.WorkerRepository;
 import co.edu.uniquindio.superdulces.services.interfaces.WorkerService;
@@ -65,6 +68,35 @@ public class WorkerImplementation implements WorkerService{
         Worker deleteWorker = getWWorker(workerId);
         deleteWorker.setState(State.INACTIVE);
         return workerRepository.save(deleteWorker);
+    }
+
+    @Override
+    public Page<ItemWorkerDTO> getActiveWorkers(Pageable pageable) throws WorkerException {
+        Page<Worker> activeWorkers = workerRepository.findByState(State.ACTIVE, pageable);
+        if (activeWorkers.isEmpty()){
+            throw new WorkerException("There is no active workers");
+        }
+        return activeWorkers.map(worker -> new ItemWorkerDTO(
+                worker.getName(),
+                worker.getDocument(),
+                worker.getSurname(),
+                worker.getEmail(),
+                worker.getPhone()
+        ));
+    }
+
+    @Override
+    public Page<ItemWorkerDTO> getInactiveWorkers(Pageable pageable) throws WorkerException {
+        Page<Worker> inactiveWorkers = workerRepository.findByState(State.INACTIVE, pageable);
+        if (inactiveWorkers.isEmpty()){
+            throw new WorkerException("There is no inactive workers");
+        }
+        return inactiveWorkers.map(worker -> new ItemWorkerDTO(worker.getName(),
+                worker.getDocument(),
+                worker.getSurname(),
+                worker.getEmail(),
+                worker.getPhone()
+        ));
     }
 
     /*Private methods*/

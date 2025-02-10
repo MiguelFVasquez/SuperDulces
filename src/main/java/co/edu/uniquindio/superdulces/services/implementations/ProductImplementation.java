@@ -1,6 +1,7 @@
 package co.edu.uniquindio.superdulces.services.implementations;
 
 import co.edu.uniquindio.superdulces.dto.productDTO.CreateProductDTO;
+import co.edu.uniquindio.superdulces.dto.productDTO.ItemProductDTO;
 import co.edu.uniquindio.superdulces.dto.productDTO.RegisterProductDTO;
 import co.edu.uniquindio.superdulces.dto.productDTO.UpdateProductDTO;
 import co.edu.uniquindio.superdulces.exceptions.ProductException;
@@ -8,6 +9,8 @@ import co.edu.uniquindio.superdulces.model.documents.Product;
 import co.edu.uniquindio.superdulces.model.enums.State;
 import co.edu.uniquindio.superdulces.repositories.ProductRepository;
 import co.edu.uniquindio.superdulces.services.interfaces.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -77,6 +80,37 @@ public class ProductImplementation implements ProductService {
         Product deleteProduct = getProduct(productID);
         deleteProduct.setState(State.INACTIVE);
         return productRepository.save(deleteProduct);
+    }
+
+    /*Method to get all active products in pageable way*/
+    @Override
+    public Page<ItemProductDTO> getActiveProducts(Pageable pageable) throws ProductException{
+        Page <Product> activeProducts = productRepository.getProductByState(State.ACTIVE,pageable);
+        if (activeProducts.isEmpty()){
+            throw new ProductException("There is no active products");
+        }
+        return activeProducts.map(product -> new ItemProductDTO(
+                product.getName(),
+                product.getImage(),
+                product.getQuantity(),
+                product.getPrice(),
+                product.getCategory()
+        ));
+    }
+
+    @Override
+    public Page <ItemProductDTO> getInactiveProducts(Pageable pageable) throws ProductException{
+        Page <Product> inactiveProducts = productRepository.getProductByState(State.INACTIVE,pageable);
+        if (inactiveProducts.isEmpty()){
+            throw new ProductException("There is no inactive products");
+        }
+        return inactiveProducts.map(product -> new ItemProductDTO(
+                product.getName(),
+                product.getImage(),
+                product.getQuantity(),
+                product.getPrice(),
+                product.getCategory()
+        ));
     }
 
     /*Private methods*/
