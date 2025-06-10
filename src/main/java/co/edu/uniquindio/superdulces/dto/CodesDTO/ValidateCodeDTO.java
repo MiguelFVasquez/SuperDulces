@@ -4,6 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 
 public record ValidateCodeDTO(
         @NotBlank String email,
-        @NotBlank String password
+        @NotBlank String code
 ) {
 }
