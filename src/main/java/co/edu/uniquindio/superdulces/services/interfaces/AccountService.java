@@ -9,7 +9,7 @@ import co.edu.uniquindio.superdulces.model.documents.Account;
 
 public interface AccountService {
 
-    Account addUserAccount(CreateAccountDTO account) throws AccountException;
+    void addUserAccount(CreateAccountDTO account) throws AccountException;
     ValidateCodeDTO validateCode(ValidateCodeDTO validateCodeDTO) throws Exception;
     AccountInformationDTO getAccountInformation(String idUser)  throws AccountException;
     TokenDTO logIn(String token) throws AccountException;
