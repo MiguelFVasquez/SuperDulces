@@ -29,7 +29,7 @@ public class ProductImplementation implements ProductService {
     @Override
     public Product newProduct(CreateProductDTO createProductDTO) throws ProductException {
         Product isnProduct= getProductByName(createProductDTO.name());
-        /*If is null means that the artist doesn´t exists*/
+        /*If is null means that the product doesn´t exists*/
         if(isnProduct!=null){
             throw new ProductException("There is already a product with that name");
         }
