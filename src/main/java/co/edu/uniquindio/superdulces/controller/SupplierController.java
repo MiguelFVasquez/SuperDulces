@@ -4,7 +4,6 @@ import co.edu.uniquindio.superdulces.dto.configDTO.MessageDTO;
 import co.edu.uniquindio.superdulces.dto.supplierDTO.CreateSupplierDTO;
 import co.edu.uniquindio.superdulces.dto.supplierDTO.ItemSupplierDTO;
 import co.edu.uniquindio.superdulces.dto.supplierDTO.UpdateSupplierDTO;
-import co.edu.uniquindio.superdulces.dto.workerDTO.ItemWorkerDTO;
 import co.edu.uniquindio.superdulces.exceptions.SupplierException;
 import co.edu.uniquindio.superdulces.services.interfaces.SupplierService;
 import jakarta.validation.Valid;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/supplier")
-
 public class SupplierController {
     private final SupplierService supplierService;
 

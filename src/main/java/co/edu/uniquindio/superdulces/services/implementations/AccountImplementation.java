@@ -22,12 +22,18 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import co.edu.uniquindio.superdulces.services.interfaces.EmailService;
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 
 @AllArgsConstructor
+@Transactional
+@Service
 public class AccountImplementation implements AccountService {
     //Repositories
     private final AccountRepository accountRepository;
