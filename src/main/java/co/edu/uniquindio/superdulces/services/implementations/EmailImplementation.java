@@ -8,7 +8,9 @@ import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.api.mailer.config.TransportStrategy;
 import org.simplejavamail.mailer.MailerBuilder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmailImplementation implements EmailService {
     @Override
     @Async
