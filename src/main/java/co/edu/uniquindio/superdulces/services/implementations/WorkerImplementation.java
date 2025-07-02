@@ -35,6 +35,7 @@ public class WorkerImplementation implements WorkerService{
                 .document(createWorkerDTO.document())
                 .surname(createWorkerDTO.surname())
                 .email(createWorkerDTO.email())
+                .phone(createWorkerDTO.phone())
                 .address(createWorkerDTO.address())
                 .wage(createWorkerDTO.wage())
                 .hoursPerWeek(createWorkerDTO.hoursPerWeek())
