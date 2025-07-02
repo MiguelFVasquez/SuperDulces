@@ -6,8 +6,10 @@ import co.edu.uniquindio.superdulces.dto.productDTO.RegisterProductDTO;
 import co.edu.uniquindio.superdulces.dto.productDTO.UpdateProductDTO;
 import co.edu.uniquindio.superdulces.exceptions.ProductException;
 import co.edu.uniquindio.superdulces.model.documents.Product;
+import co.edu.uniquindio.superdulces.model.documents.Supplier;
 import co.edu.uniquindio.superdulces.model.enums.State;
 import co.edu.uniquindio.superdulces.repositories.ProductRepository;
+import co.edu.uniquindio.superdulces.repositories.SupplierRepository;
 import co.edu.uniquindio.superdulces.services.interfaces.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductImplementation implements ProductService {
 
     private final ProductRepository productRepository;
-
+    private final SupplierRepository supplierRepository;
     /*
     *Method for adding a product for the first time
     * */
@@ -32,6 +34,11 @@ public class ProductImplementation implements ProductService {
         /*If is null means that the product doesn´t exists*/
         if(isnProduct!=null){
             throw new ProductException("There is already a product with that name");
+        }
+
+        Supplier productSupplier= supplierRepository.findByName(createProductDTO.supplier().getName());
+        if(productSupplier==null){
+            throw new ProductException("There is no supplier with that name");
         }
         Product newProduct = Product.builder()
                 .id(String.valueOf(new ObjectId()))
@@ -45,6 +52,8 @@ public class ProductImplementation implements ProductService {
                 .category(createProductDTO.category())
                 .build();
 
+        productSupplier.getProductList().add(newProduct); // Add the product to the list of the supplier
+        supplierRepository.save(productSupplier); //Save product information
         return productRepository.save(newProduct);
     }
     /*

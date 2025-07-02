@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 @Service
 @Transactional
@@ -29,12 +30,10 @@ public class SupplierImplementation implements SupplierService {
 
     @Override
     public Supplier addSupplier(CreateSupplierDTO createSupplierDTO) throws SupplierException {
-        Supplier isnSupplier= getSupplierByName(createSupplierDTO.name());
-
+        Supplier isnSupplier= getSupplierByName(createSupplierDTO.name().toLowerCase().replaceAll(" ", ""));
         if (isnSupplier != null) {
             throw new SupplierException("Supplier already exists");
         }
-
         Supplier newSupplier = Supplier.builder()
                 .id(String.valueOf(new ObjectId()))
                 .name(createSupplierDTO.name())
@@ -43,7 +42,7 @@ public class SupplierImplementation implements SupplierService {
                 .phone(createSupplierDTO.phone())
                 .email(createSupplierDTO.email())
                 .state(State.ACTIVE)
-                .productList(new ArrayList<Product>())
+                .productList(new ArrayList<>())
                 .build();
 
         return supplierRepository.save(newSupplier);
@@ -81,7 +80,8 @@ public class SupplierImplementation implements SupplierService {
                 supplier.getName(),
                 supplier.getNit(),
                 supplier.getPhone(),
-                supplier.getEmail()
+                supplier.getEmail(),
+                supplier.getAddress()
         ));
 
     }
@@ -95,7 +95,8 @@ public class SupplierImplementation implements SupplierService {
                 supplier.getName(),
                 supplier.getNit(),
                 supplier.getPhone(),
-                supplier.getEmail()
+                supplier.getEmail(),
+                supplier.getAddress()
         ));
 
     }
